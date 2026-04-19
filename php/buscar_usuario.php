@@ -19,7 +19,7 @@ if (!empty($cedLimpia)) {
 
         $stmt = $pdo->prepare("SELECT nombres, apellidos FROM empleados WHERE nacionalidad = :nac AND cedula = :ced LIMIT 1");
         $stmt->execute([':nac' => $nacLimpia, ':ced' => $cedLimpia]);
-        $empleado = $stmt->fetch(PDO::FETCH_ASSOC);
+        $empleado = $stmt->fetch();
 
         if ($empleado) {
             $response['existe'] = true;
