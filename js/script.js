@@ -3,6 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnDescargar = document.getElementById("btnDescargarPDF");
   const infoUsuario = document.getElementById("infoUsuario");
 
+  btnDescargar.addEventListener("click", () => {
+    if (!btnDescargar.disabled) {
+      const nac = document.getElementById("nacionalidad").value;
+      const ced = document.getElementById("cedula").value;
+      window.location.href = `php/generar_pdf.php?nac=${nac}&ced=${ced}`;
+    }
+  });
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -10,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ced = document.getElementById("cedula").value;
 
     infoUsuario.innerHTML = "Verificando...";
-    infoUsuario.className = "mensaje-espera";
+    infoUsuario.className = "contenedor-mensaje mensaje-espera";
     btnDescargar.disabled = true;
 
     try {
@@ -21,19 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (datos.existe) {
         infoUsuario.innerHTML = `<strong>Persona encontrada:</strong> ${datos.nombre}`;
-        infoUsuario.className = "alerta-exito";
-
+        infoUsuario.className = "contenedor-mensaje alerta-exito";
         btnDescargar.disabled = false;
       } else {
         infoUsuario.innerHTML =
           "No se encontró ningún registro con esa cédula.";
-        infoUsuario.className = "alerta-error";
+        infoUsuario.className = "contenedor-mensaje alerta-error";
         btnDescargar.disabled = true;
       }
     } catch (error) {
       console.error("Error en la petición:", error);
       infoUsuario.innerHTML = "Hubo un problema al conectar con el servidor.";
-      infoUsuario.className = "alerta-error";
+      infoUsuario.className = "contenedor-mensaje alerta-error";
     }
   });
 });
