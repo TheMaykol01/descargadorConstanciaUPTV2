@@ -1,8 +1,8 @@
 <?php
 require_once 'main.php';
 
-$nacionalidad = $_GET['nacionalidad'] ?? '';
-$cedula = $_GET['cedula'] ?? '';
+$nacionalidad = $_GET['nacionalidad'];
+$cedula = $_GET['cedula'];
 
 $protector = new protegerInyeccionSQL();
 $nacLimpia = $protector->limpiarCadena($nacionalidad);
@@ -27,6 +27,8 @@ if (!empty($cedLimpia)) {
         }
     }
 }
+
+$pdo = null;
 
 header('Content-Type: application/json');
 echo json_encode($response);
