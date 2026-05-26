@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!btnDescargar.disabled) {
       const nac = document.getElementById("nacionalidad").value;
       const ced = document.getElementById("cedula").value;
-      window.location.href = `php/generar_pdf.php?nac=${nac}&ced=${ced}`;
+      window.location.href = `app/ajax/generar_pdf.php?nac=${nac}&ced=${ced}`;
     }
   });
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const respuesta = await fetch(
-        `php/buscar_usuario.php?nacionalidad=${nac}&cedula=${ced}`,
+        `app/ajax/buscar_usuario.php?nacionalidad=${nac}&cedula=${ced}`,
       );
       const datos = await respuesta.json();
 
