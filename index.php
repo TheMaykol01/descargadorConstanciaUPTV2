@@ -18,7 +18,11 @@ if (!empty($_GET['views'])) {
     $ruta = trim($_GET['url'], '/');
 }
 
-$isHome = $ruta === '';
+if ($ruta === '') {
+    $isHome = true;
+} else {
+    $isHome = false;
+}
 $viewController = new viewsControllers();
 $vista = $viewController->obtenerVistascontrolador($ruta);
 
