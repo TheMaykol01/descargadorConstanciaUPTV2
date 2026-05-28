@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../models/ConexionDB.php';
-require_once __DIR__ . '/../models/ProtectorSQL.php';
+require_once __DIR__ . '/../../config/server.php';
+require_once __DIR__ . '/../../config/ProtectorSQL.php';
 
-$nacionalidad = $_GET['nacionalidad'] ?? '';
-$cedula = $_GET['cedula'] ?? '';
+$nacionalidad = $_GET['nacionalidad'];
+$cedula = $_GET['cedula'];
 
 $protector = new protegerInyeccionSQL();
 $nacLimpia = $protector->limpiarCadena($nacionalidad);

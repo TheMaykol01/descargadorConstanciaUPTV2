@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class ConexionDB
 {
@@ -11,9 +11,8 @@ class ConexionDB
 
         try {
             $conn = new PDO("pgsql:host=$host;port=5432;dbname=$dbname", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             echo 'Error de conexión: ' . $e->getMessage();
             return null;
         }
