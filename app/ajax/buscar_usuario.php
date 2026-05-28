@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../../config/server.php';
-require_once __DIR__ . '/../../config/ProtectorSQL.php';
+require_once '../../config/server.php';
+require_once '../../config/ProtectorSQL.php';
 
 $nacionalidad = $_GET['nacionalidad'];
 $cedula = $_GET['cedula'];
