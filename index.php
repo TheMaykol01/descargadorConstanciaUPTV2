@@ -1,11 +1,20 @@
 <?php
 
 require_once 'config/server.php';
-require_once 'config/ProtectorSQL.php';
 require_once 'autoload.php';
+require_once 'app/models/mainModel.php';
 
-$db = new ConexionDB();
-$pdo = $db->conexionDB();
+use app\models\mainModel;
+
+$mainModel = new mainModel();
+
+if (!empty($_GET['cedula'])) {
+    $_GET['cedula'] = $mainModel->limpiarCadena($_GET['cedula']);
+}
+
+if (!empty($_GET['nacionalidad'])) {
+    $_GET['nacionalidad'] = $mainModel->limpiarCadena($_GET['nacionalidad']);
+}
 
 include_once 'app/views/includes/header.php';
 
