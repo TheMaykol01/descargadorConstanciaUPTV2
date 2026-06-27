@@ -67,8 +67,12 @@ class mainModel
     {
         if ($cadena === null) {
             return false;
+        } else {
+            if (preg_match('/^' . $filtro . '$/', $cadena)) {
+                return true;
+            } else {
+                return false;
+            }
         }
-
-        return preg_match('/^' . $filtro . '$/', $cadena) === 1;
     }
 }
