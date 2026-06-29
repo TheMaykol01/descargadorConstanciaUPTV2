@@ -2,18 +2,13 @@
 
 require_once 'config/server.php';
 require_once 'autoload.php';
-require_once 'app/models/mainModel.php';
-
-use app\models\mainModel;
-
-$mainModel = new mainModel();
 
 if (!empty($_GET['cedula'])) {
-    $_GET['cedula'] = $mainModel->limpiarCadena($_GET['cedula']);
+    $_GET['cedula'] = trim($_GET['cedula']);
 }
 
 if (!empty($_GET['nacionalidad'])) {
-    $_GET['nacionalidad'] = $mainModel->limpiarCadena($_GET['nacionalidad']);
+    $_GET['nacionalidad'] = trim($_GET['nacionalidad']);
 }
 
 include_once 'app/views/includes/header.php';
@@ -27,15 +22,10 @@ if (!empty($_GET['views'])) {
     $ruta = trim($_GET['url'], '/');
 }
 
-if ($ruta === '') {
-    $isHome = true;
-} else {
-    $isHome = false;
-}
 $viewController = new viewsControllers();
 $vista = $viewController->obtenerVistascontrolador($ruta);
 
-if ($isHome) {
+if ($ruta === '') {
 ?>
 <form id="formDescarga" action="" method="GET" class="formulario">
   <div class="campo">
@@ -62,14 +52,8 @@ if ($isHome) {
   </div>
 </form>
 <?php
-}
-
-if (!$isHome) {
-    if (!is_file($vista)) {
-        include_once 'app/views/content/404-view.php';
-    } else {
-        include_once $vista;
-    }
+} else {
+    include_once 'app/views/content/404-view.php';
 }
 ?>
 
