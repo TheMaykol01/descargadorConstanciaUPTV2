@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!btnDescargar.disabled) {
       const nac = document.getElementById("nacionalidad").value;
       const ced = document.getElementById("cedula").value;
-      window.location.href = `app/ajax/generar_pdf.php?nac=${nac}&ced=${ced}`;
+      window.location.href = `?descargar=1&nac=${nac}&ced=${ced}`;
     }
   });
 

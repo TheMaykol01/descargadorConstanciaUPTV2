@@ -246,3 +246,125 @@ input::-webkit-inner-spin-button {
 .pie-pagina strong {
   color: #333;
 }
+
+.pdf-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pdf-header {
+  text-align: center;
+  border-bottom: 2px solid #ff6600;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.pdf-header-title {
+  color: #ff6600;
+  font-size: 18pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.pdf-header-subtitle {
+  color: #666666;
+  font-size: 10pt;
+}
+
+.pdf-title-section {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.pdf-document-title {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #222222;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pdf-body-text {
+  text-align: justify;
+  margin-bottom: 20px;
+  font-size: 11pt;
+}
+
+.pdf-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.pdf-data-table th,
+.pdf-data-table td {
+  border: 1px solid #dddddd;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 11pt;
+}
+
+.pdf-data-table th {
+  background-color: #f4f4f4;
+  color: #ff6600;
+  font-weight: bold;
+  width: 35%;
+}
+
+.pdf-data-table td {
+  background-color: #ffffff;
+}
+
+.pdf-signatures-section {
+  margin-top: 60px;
+  width: 100%;
+}
+
+.pdf-signature-box {
+  width: 45%;
+  float: left;
+  text-align: center;
+}
+
+.pdf-signature-box-right {
+  width: 45%;
+  float: right;
+  text-align: center;
+}
+
+.pdf-signature-line {
+  border-top: 1px solid #333333;
+  margin-bottom: 8px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pdf-signature-name {
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+.pdf-signature-title {
+  font-size: 9pt;
+  color: #666666;
+}
+
+.clear-fix {
+  clear: both;
+}
+
+.pdf-footer {
+  position: fixed;
+  bottom: 20px;
+  left: 30px;
+  right: 30px;
+  text-align: center;
+  font-size: 8pt;
+  color: #888888;
+  border-top: 1px solid #eeeeee;
+  padding-top: 8px;
+}
