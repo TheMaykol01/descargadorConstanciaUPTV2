@@ -6,8 +6,8 @@ require_once '../../app/models/mainModel.php';
 
 use app\models\mainModel;
 
-$nacionalidad = $_GET['nacionalidad'];
-$cedula = $_GET['cedula'];
+$nacionalidad = $_POST['nacionalidad'];
+$cedula = $_POST['cedula'];
 
 $mainModel = new class extends mainModel {
     public function conectarPublic()

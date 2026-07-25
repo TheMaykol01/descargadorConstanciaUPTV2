@@ -4,10 +4,16 @@ require_once 'config/server.php';
 require_once 'autoload.php';
 
 use app\models\mainModel;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Dompdf\Dompdf;  
 
-if (isset($_GET['descargar'])) {
+if (isset($_GET['descargar']) || isset($_GET['nac']) || isset($_GET['ced'])) {
+    include_once 'app/views/includes/header.php';
+    include_once 'app/views/content/404-view.php';
+    include_once 'app/views/includes/footer.php';
+    exit;
+}
+
+if (isset($_POST['descargar'])) {
     require_once 'config/app.php';
     require_once 'app/models/mainModel.php';
     require_once 'librerias/dompdf/autoload.inc.php';
@@ -25,13 +31,18 @@ if (isset($_GET['descargar'])) {
     };
 
     $nacionalidad = 'V';
-    if (isset($_GET['nac'])) {
-        $nacionalidad = $mainModel->limpiarPublic($_GET['nac']);
+    if (isset($_POST['nacionalidad'])) {
+        $nacionalidad = $mainModel->limpiarPublic($_POST['nacionalidad']);
+    }
+
+    $nacionalidad = 'E';
+    if (isset($_POST['nacionalidad'])) {
+        $nacionalidad = $mainModel->limpiarPublic($_POST['nacionalidad']);
     }
 
     $cedula = '';
-    if (isset($_GET['ced'])) {
-        $cedula = $mainModel->limpiarPublic($_GET['ced']);
+    if (isset($_POST['cedula'])) {
+        $cedula = $mainModel->limpiarPublic($_POST['cedula']);
     }
 
     $empleado = null;
@@ -148,27 +159,25 @@ if (isset($_GET['descargar'])) {
 <?php
     $html = ob_get_clean();
 
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-    $options->set('isRemoteEnabled', true);
-    $options->set('defaultFont', 'Helvetica');
-
-    $dompdf = new Dompdf($options);
+    $dompdf = new Dompdf();
+    $options = $dompdf->getOptions();
+    $options->setIsRemoteEnabled(true);
+    $dompdf->setOptions($options);
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
 
-    $nombreArchivo = 'Constancia_' . $cedulaCompleta . '.pdf';
+    $nombreArchivo = 'Constancia' . $cedulaCompleta . '.pdf';
     $dompdf->stream($nombreArchivo, ['Attachment' => false]);
     exit;
 }
 
-if (!empty($_GET['cedula'])) {
-    $_GET['cedula'] = trim($_GET['cedula']);
+if (!empty($_POST['cedula'])) {
+    $_POST['cedula'] = trim($_POST['cedula']);
 }
 
-if (!empty($_GET['nacionalidad'])) {
-    $_GET['nacionalidad'] = trim($_GET['nacionalidad']);
+if (!empty($_POST['nacionalidad'])) {
+    $_POST['nacionalidad'] = trim($_POST['nacionalidad']);
 }
 
 include_once 'app/views/includes/header.php';
@@ -176,10 +185,10 @@ include_once 'app/views/includes/header.php';
 require_once 'app/controllers/viewsControllers.php';
 
 $ruta = '';
-if (!empty($_GET['views'])) {
-    $ruta = trim($_GET['views'], '/');
-} elseif (!empty($_GET['url'])) {
-    $ruta = trim($_GET['url'], '/');
+if (!empty($_POST['views'])) {
+    $ruta = trim($_POST['views'], '/');
+} elseif (!empty($_POST['url'])) {
+    $ruta = trim($_POST['url'], '/');
 }
 
 $viewController = new viewsControllers();
@@ -187,7 +196,7 @@ $vista = $viewController->obtenerVistascontrolador($ruta);
 
 if ($ruta === '') {
 ?>
-<form id="formDescarga" action="" method="GET" class="formulario">
+<form id="formDescarga" action="" method="POST" class="formulario">
   <div class="campo">
     <label for="cedula">Cédula de Identidad</label>
     <div class="input-combinado">
@@ -198,6 +207,8 @@ if ($ruta === '') {
       <input type="number" id="cedula" name="cedula" placeholder="Ej. 25123456" required>
     </div>
   </div>
+
+  <input type="hidden" name="descargar" id="descargarHidden" value="">
 
   <div id="infoUsuario" class="contenedor-mensaje"></div>
 

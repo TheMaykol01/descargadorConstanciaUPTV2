@@ -2,16 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("formDescarga");
   const btnDescargar = document.getElementById("btnDescargarPDF");
   const infoUsuario = document.getElementById("infoUsuario");
+  const descargarHidden = document.getElementById("descargarHidden");
 
   btnDescargar.addEventListener("click", () => {
     if (!btnDescargar.disabled) {
-      const nac = document.getElementById("nacionalidad").value;
-      const ced = document.getElementById("cedula").value;
-      window.location.href = `?descargar=1&nac=${nac}&ced=${ced}`;
+      descargarHidden.value = "1";
+      form.submit();
     }
   });
 
   form.addEventListener("submit", async (e) => {
+    if (descargarHidden.value === "1") {
+      return;
+    }
+
     e.preventDefault();
 
     const nac = document.getElementById("nacionalidad").value;
@@ -21,9 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
     infoUsuario.className = "contenedor-mensaje mensaje-espera";
     btnDescargar.disabled = true;
 
+    const formData = new FormData();
+    formData.append("nacionalidad", nac);
+    formData.append("cedula", ced);
+
     try {
       const respuesta = await fetch(
-        `app/ajax/buscar_usuario.php?nacionalidad=${nac}&cedula=${ced}`,
+        "app/ajax/buscar_usuario.php",
+        {
+          method: "POST",
+          body: formData,
+        },
       );
       const datos = await respuesta.json();
 
