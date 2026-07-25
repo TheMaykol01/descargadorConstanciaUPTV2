@@ -53,7 +53,7 @@ if (isset($_POST['descargar'])) {
             if ($pdo) {
                 $stmt = $pdo->prepare("SELECT * FROM empleados WHERE nacionalidad = :nac AND cedula = :ced LIMIT 1");
                 $stmt->execute([':nac' => $nacionalidad, ':ced' => $cedula]);
-                $empleado = $stmt->fetch(PDO::FETCH_ASSOC);
+                $empleado = $stmt->fetch();
             }
         } catch (Throwable $e) {
             $empleado = null;
