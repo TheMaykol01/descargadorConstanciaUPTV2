@@ -1,0 +1,33 @@
+# Entornos y Credenciales
+.env
+.env.*
+!.env.example
+
+# Archivos de configuración local y copias de seguridad
+config/server.local.php
+*.bak
+*.backup
+*.sql
+*.sqlite
+
+# Registros y archivos temporales
+*.log
+*.tmp
+*.swp
+*~
+
+# Caché de fuentes autogeneradas por Dompdf
+librerias/dompdf/vendor/dompdf/dompdf/lib/fonts/*.afm.json
+librerias/dompdf/vendor/dompdf/dompdf/lib/fonts/*.ufm.json
+
+# Archivos de entorno y configuración del IDE / Sistema Operativo
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Archivos locales de Docker Compose
+docker-compose.override.yml
