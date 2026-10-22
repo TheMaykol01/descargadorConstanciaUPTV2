@@ -10,21 +10,16 @@ if (file_exists(__DIR__ . "/../../config/server.php")) {
 
 class mainModel
 {
-    private $DB_SERVER = DB_SERVER;
-    private $dbname = DB_NAME;
-    private $username = DB_USER;
-    private $password = DB_PASS;
-
     protected function conectar()
     {
-        $conexion = new PDO("pgsql:host=" . $this->DB_SERVER . ";port=" . DB_PORT . ";dbname=" . $this->dbname, $this->username, $this->password);
-        $conexion->exec("SET NAMES 'utf8'");
-        return $conexion;
+        $dsn = "mysql:host=" . DB_SERVER . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+
+        return new PDO($dsn, DB_USER, DB_PASS);
     }
 
     public function limpiarCadena($cadena)
     {
-        $palabra = [
+        $palabras = [
             "<script>",
             "</script>",
             "<script src",
@@ -50,17 +45,9 @@ class mainModel
             ";"
         ];
 
-        $cadena = trim($cadena);
-        $cadena = stripslashes($cadena);
+        $cadena = str_ireplace($palabras, "", trim(stripslashes($cadena)));
 
-        foreach ($palabra as $valor) {
-            $cadena = str_ireplace($valor, "", $cadena);
-        }
-
-        $cadena = trim($cadena);
-        $cadena = stripslashes($cadena);
-
-        return $cadena;
+        return trim(stripslashes($cadena));
     }
 
     public function verificarDatos($filtro, $cadena)

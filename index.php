@@ -31,12 +31,7 @@ if (isset($_POST['descargar'])) {
     };
 
     $nacionalidad = 'V';
-    if (isset($_POST['nacionalidad'])) {
-        $nacionalidad = $mainModel->limpiarPublic($_POST['nacionalidad']);
-    }
-
-    $nacionalidad = 'E';
-    if (isset($_POST['nacionalidad'])) {
+    if (!empty($_POST['nacionalidad'])) {
         $nacionalidad = $mainModel->limpiarPublic($_POST['nacionalidad']);
     }
 
@@ -85,6 +80,9 @@ if (isset($_POST['descargar'])) {
 
     $estilosCss = file_get_contents('css/style.css');
 
+    $logoMppeu = 'img/cropped-MPPEU-ICON.png';
+    $logoUptv = 'img/UPTV.jpg';
+
     ob_start();
 ?>
 <!DOCTYPE html>
@@ -98,24 +96,37 @@ if (isset($_POST['descargar'])) {
 </head>
 <body>
     <div class="pdf-container">
-        <header class="pdf-header">
-            <h1 class="pdf-header-title"><?php echo htmlspecialchars(APP_NAME); ?></h1>
-            <p class="pdf-header-subtitle">Gestión de Documentos y Constancias Oficiales</p>
-        </header>
+        <!-- Encabezado con logos institucionales en esquinas superiores -->
+        <table class="pdf-header-table">
+            <tr>
+                <td class="pdf-logo-cell-left">
+                    <img src="<?php echo $logoMppeu; ?>" alt="Logo MPPEU" class="pdf-logo-mppeu">
+                </td>
+                <td class="pdf-header-text-cell">
+                    <p class="pdf-header-country">REPÚBLICA BOLIVARIANA DE VENEZUELA</p>
+                    <p class="pdf-header-ministry">MINISTERIO DEL PODER POPULAR PARA LA EDUCACIÓN UNIVERSITARIA</p>
+                    <p class="pdf-header-institution">UNIVERSIDAD POLITÉCNICA TERRITORIAL DE VALENCIA</p>
+                </td>
+                <td class="pdf-logo-cell-right">
+                    <img src="<?php echo $logoUptv; ?>" alt="Logo UPTV" class="pdf-logo-uptv">
+                </td>
+            </tr>
+        </table>
 
-        <section class="pdf-title-section">
-            <h2 class="pdf-document-title">Constancia de Trabajo</h2>
-        </section>
+        <!-- Título del documento centrado -->
+        <div class="pdf-title-section">
+            <h1 class="pdf-document-title">CONSTANCIA DE TRABAJO</h1>
+        </div>
 
-        <section class="pdf-body-text">
-            <p>
-                Por medio de la presente se hace constar que el/la ciudadano(a) 
-                <strong><?php echo htmlspecialchars($nombreCompleto); ?></strong>, 
-                titular de la cédula de identidad N° <strong><?php echo htmlspecialchars($cedulaCompleta); ?></strong>, 
-                labora en nuestra institución desempeñando sus funciones de manera satisfactoria.
-            </p>
-        </section>
+        <!-- Cuerpo de la constancia con texto justificado -->
+        <div class="pdf-body-text">
+            Por medio de la presente se hace constar que el/la ciudadano(a) 
+            <strong><?php echo htmlspecialchars($nombreCompleto); ?></strong>, 
+            titular de la cédula de identidad N° <strong><?php echo htmlspecialchars($cedulaCompleta); ?></strong>, 
+            labora en nuestra institución desempeñando sus funciones con responsabilidad y eficiencia.
+        </div>
 
+        <!-- Tabla de datos alineada y estructurada -->
         <table class="pdf-data-table">
             <tr>
                 <th>Nombres y Apellidos</th>
@@ -127,7 +138,7 @@ if (isset($_POST['descargar'])) {
             </tr>
             <tr>
                 <th>Estado de Registro</th>
-                <td><?php echo $estadoRegistro; ?></td>
+                <td><?php echo htmlspecialchars($estadoRegistro); ?></td>
             </tr>
             <tr>
                 <th>Fecha de Emisión</th>
@@ -135,24 +146,28 @@ if (isset($_POST['descargar'])) {
             </tr>
         </table>
 
-        <section class="pdf-signatures-section">
-            <div class="pdf-signature-box">
-                <div class="pdf-signature-line"></div>
-                <p class="pdf-signature-name">Departamento de Recursos Humanos</p>
-                <p class="pdf-signature-title">Firma Autorizada</p>
-            </div>
+        <!-- Sección de firmas con amplia separación del contenido principal -->
+        <div class="pdf-signatures-section">
+            <table class="pdf-signatures-table">
+                <tr>
+                    <td>
+                        <div class="pdf-signature-line"></div>
+                        <p class="pdf-signature-name">Dirección de Gestión del Talento Humano</p>
+                        <p class="pdf-signature-title">Firma Autorizada</p>
+                    </td>
+                    <td>
+                        <div class="pdf-signature-line"></div>
+                        <p class="pdf-signature-name">Secretaría General Académica</p>
+                        <p class="pdf-signature-title">Sello y Validación</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-            <div class="pdf-signature-box-right">
-                <div class="pdf-signature-line"></div>
-                <p class="pdf-signature-name">Dirección General</p>
-                <p class="pdf-signature-title">Sello y Validación</p>
-            </div>
-            <div class="clear-fix"></div>
-        </section>
-
-        <footer class="pdf-footer">
-            <p>Documento generado digitalmente por <?php echo htmlspecialchars(APP_NAME); ?> - <?php echo $fechaActual; ?></p>
-        </footer>
+        <!-- Pie de página -->
+        <div class="pdf-footer">
+            <p>Documento oficial emitido por <?php echo htmlspecialchars(APP_NAME); ?> &bull; Válido para fines legales y administrativos &bull; <?php echo htmlspecialchars($fechaActual); ?></p>
+        </div>
     </div>
 </body>
 </html>
@@ -161,13 +176,14 @@ if (isset($_POST['descargar'])) {
 
     $dompdf = new Dompdf();
     $options = $dompdf->getOptions();
+    $options->setChroot(__DIR__);
     $options->setIsRemoteEnabled(true);
     $dompdf->setOptions($options);
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
 
-    $nombreArchivo = 'Constancia' . $cedulaCompleta . '.pdf';
+    $nombreArchivo = 'Constancia_' . $cedulaCompleta . '.pdf';
     $dompdf->stream($nombreArchivo, ['Attachment' => false]);
     exit;
 }

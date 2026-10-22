@@ -247,116 +247,178 @@ input::-webkit-inner-spin-button {
   color: #333;
 }
 
+/* ==========================================================================
+   Estilos para Generación de Constancia en PDF (Dompdf)
+   ========================================================================== */
+
 .pdf-container {
   width: 100%;
-  margin: 0 auto;
 }
 
-.pdf-header {
-  text-align: center;
+/* Encabezado con logos institucionales en esquinas superiores */
+.pdf-header-table {
+  width: 100%;
+  border-collapse: collapse;
   border-bottom: 2px solid #ff6600;
-  padding-bottom: 15px;
-  margin-bottom: 25px;
+  padding-bottom: 12px;
+  margin-bottom: 28px;
 }
 
-.pdf-header-title {
-  color: #ff6600;
-  font-size: 18pt;
+.pdf-header-table td {
+  vertical-align: middle;
+  border: none;
+  padding: 0;
+}
+
+.pdf-logo-cell-left {
+  width: 20%;
+  text-align: left;
+}
+
+.pdf-logo-cell-right {
+  width: 20%;
+  text-align: right;
+}
+
+.pdf-header-text-cell {
+  width: 60%;
+  text-align: center;
+}
+
+.pdf-logo-mppeu {
+  height: 60px;
+  width: auto;
+}
+
+.pdf-logo-uptv {
+  height: 52px;
+  width: auto;
+}
+
+.pdf-header-country {
+  font-size: 8pt;
   font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 5px;
+  color: #444444;
+  margin: 0 0 2px 0;
+  letter-spacing: 0.5px;
 }
 
-.pdf-header-subtitle {
-  color: #666666;
-  font-size: 10pt;
+.pdf-header-ministry {
+  font-size: 7.5pt;
+  font-weight: bold;
+  color: #555555;
+  margin: 0 0 2px 0;
 }
 
+.pdf-header-institution {
+  font-size: 9pt;
+  font-weight: bold;
+  color: #ff6600;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Título de la Constancia */
 .pdf-title-section {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 30px;
 }
 
 .pdf-document-title {
-  font-size: 14pt;
+  font-size: 15pt;
   font-weight: bold;
   color: #222222;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  margin: 0;
+  padding-bottom: 6px;
+  display: inline-block;
+  border-bottom: 1px solid #cccccc;
 }
 
+/* Cuerpo de texto de la constancia */
 .pdf-body-text {
   text-align: justify;
-  margin-bottom: 20px;
+  text-justify: inter-word;
+  line-height: 1.9;
   font-size: 11pt;
+  text-indent: 40px;
+  margin-bottom: 25px;
+  color: #333333;
 }
 
+/* Tabla de datos del empleado */
 .pdf-data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .pdf-data-table th,
 .pdf-data-table td {
-  border: 1px solid #dddddd;
-  padding: 10px 12px;
-  text-align: left;
-  font-size: 11pt;
+  border: 1px solid #d0d0d0;
+  padding: 10px 14px;
+  font-size: 10.5pt;
 }
 
 .pdf-data-table th {
-  background-color: #f4f4f4;
+  background-color: #f8f9fa;
   color: #ff6600;
   font-weight: bold;
-  width: 35%;
+  width: 38%;
+  text-align: left;
 }
 
 .pdf-data-table td {
   background-color: #ffffff;
+  color: #333333;
+  text-align: left;
 }
 
+/* Sección de firmas: amplia separación y centrado en dos columnas */
 .pdf-signatures-section {
-  margin-top: 60px;
+  margin-top: 90px;
   width: 100%;
 }
 
-.pdf-signature-box {
-  width: 45%;
-  float: left;
-  text-align: center;
+.pdf-signatures-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
 }
 
-.pdf-signature-box-right {
-  width: 45%;
-  float: right;
+.pdf-signatures-table td {
+  width: 50%;
   text-align: center;
+  vertical-align: top;
+  border: none;
+  padding: 0 20px;
 }
 
 .pdf-signature-line {
   border-top: 1px solid #333333;
-  margin-bottom: 8px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 75%;
+  margin: 0 auto 10px auto;
 }
 
 .pdf-signature-name {
   font-weight: bold;
-  font-size: 10pt;
+  font-size: 9.5pt;
+  color: #222222;
+  margin: 0 0 3px 0;
 }
 
 .pdf-signature-title {
-  font-size: 9pt;
+  font-size: 8.5pt;
   color: #666666;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.clear-fix {
-  clear: both;
-}
-
+/* Pie de página del PDF */
 .pdf-footer {
   position: fixed;
   bottom: 20px;
@@ -368,3 +430,4 @@ input::-webkit-inner-spin-button {
   border-top: 1px solid #eeeeee;
   padding-top: 8px;
 }
+
